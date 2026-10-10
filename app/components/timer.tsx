@@ -63,7 +63,8 @@ export function Timer() {
   const remainingMs = remaining ?? total;
   const progress = 1 - remainingMs / total;
   const isBreak = mode !== "focus";
-  const devState: DevState = isBreak ? "break" : running ? "coding" : "idle";
+  const devState: DevState =
+    mode === "shortBreak" ? "coffee" : mode === "longBreak" ? "break" : running ? "coding" : "idle";
 
   function recordCycle(status: CycleStatus) {
     const startedAt = startedAtRef.current;
