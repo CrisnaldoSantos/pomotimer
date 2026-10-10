@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <h1 style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; color: #e6edf3; letter-spacing: 0.12em; font-size: 2.5rem; margin-bottom: 0.35rem;">
+    <span style="color: #3fb950;">~/</span>pomotimer
+  </h1>
+  <p style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; color: #8b949e; letter-spacing: 0.08em; margin-top: 0;">
+    foco, pausas e disciplina em um único timer
+  </p>
+</div>
 
-## Getting Started
+<p align="center">
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.4.0-000000?style=flat-square&logo=nextdotjs&logoColor=white" />
+  <img alt="React" src="https://img.shields.io/badge/React-19.3.0-61DAFB?style=flat-square&logo=react&logoColor=black" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+</p>
 
-First, run the development server:
+## Visão geral
+
+O Pomotimer é um timer de foco com visual minimalista e tema escuro, pensado para quem quer manter o ritmo de trabalho sem perder o controle do tempo. O fluxo principal alterna entre:
+
+- foco intenso
+- pausa curta
+- pausa longa
+
+A interface foi criada com um estilo de terminal/editor, usando tipografia monoespaçada, superfícies escuras e detalhes em verde, azul e laranja para reforçar o estado da sessão.
+
+## Recursos
+
+- temporizador de foco com contagem regressiva
+- ciclos automáticos de pausa curta e longa
+- histórico local de sessões concluídas e interrompidas
+- configurações persistidas no navegador
+- notificações do sistema para mudança de fase
+- atalhos de teclado para controlar rapidamente o timer
+- layout responsivo para desktop e mobile
+
+## Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Local Storage para persistência
+
+## Como rodar
+
+1. Instale as dependências:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Inicie o ambiente de desenvolvimento:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Acesse no navegador:
 
-## Learn More
+```txt
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev     # inicia a aplicação em modo de desenvolvimento
+pnpm build   # gera a build de produção
+pnpm start   # inicia a build gerada
+pnpm lint    # valida o código com ESLint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Estrutura do projeto
 
-## Deploy on Vercel
+```txt
+pomotimer/
+├── app/
+│   ├── ciclos/
+│   ├── configuracoes/
+│   ├── components/
+│   ├── hooks/
+│   ├── lib/
+│   ├── services/
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── public/
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.json
+├── next.config.ts
+├── eslint.config.mjs
+└── README.md
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Design
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+O visual do projeto foi pensado para refletir ambientes de desenvolvimento e produtividade:
+
+- fundo principal: `#0d1117`
+- superfície: `#161b22`
+- texto principal: `#e6edf3`
+- texto secundário: `#8b949e`
+- destaque foco: `#3fb950`
+- destaque pausa: `#58a6ff`
+- alerta/acento: `#ffa657`
+
+A tipografia predominante é monoespaçada para transmitir velocidade, clareza e sensação de controle visual.
+
+## Fluxo de uso
+
+1. Inicie uma sessão de foco.
+2. Trabalhe na tarefa escolhida sem interrupções.
+3. Quando a sessão terminar, o app alterna para pausa curta ou longa.
+4. Acompanhe o histórico em "Ciclos" e ajuste os tempos em "Configurações".
+
+## Observação
+
+Este projeto foi desenvolvido para funcionar de forma leve e local, sem dependência de backend, priorizando performance e simplicidade no fluxo de produtividade.
