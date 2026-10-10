@@ -254,13 +254,13 @@ export function DevAnimation({
           <g className="dev-arm-coffee">
             <line x1="132" y1="188" x2="146" y2="216" stroke={HOODIE} strokeWidth="14" strokeLinecap="round" />
             <g className="dev-sip">
-              <line x1="146" y1="216" x2="153" y2="170" stroke={HOODIE} strokeWidth="12" strokeLinecap="round" />
+              <line x1="146" y1="216" x2="152" y2="178" stroke={HOODIE} strokeWidth="12" strokeLinecap="round" />
               <g className="dev-held-mug">
                 <g className="dev-held-steam">
-                  {[166, 173].map((x, i) => (
+                  {[165, 172].map((x, i) => (
                     <path
                       key={x}
-                      d={`M${x} 144 q-3 -5 0 -10 q3 -5 0 -10`}
+                      d={`M${x} 152 q-3 -5 0 -10 q3 -5 0 -10`}
                       fill="none"
                       stroke="var(--muted)"
                       strokeWidth="1.8"
@@ -270,13 +270,13 @@ export function DevAnimation({
                     />
                   ))}
                 </g>
-                <path d="M159 151 q-10 0 -10 7.5 q0 7.5 10 7.5" fill="none" stroke="var(--orange)" strokeWidth="3" />
-                <rect x="159" y="148" width="19" height="21" rx="3.5" fill="var(--orange)" />
-                <text x="168.5" y="162" textAnchor="middle" fontSize="7" fill="var(--background)" fontFamily="var(--font-geist-mono), monospace" fontWeight="700">
+                <path d="M158 159 q-10 0 -10 7.5 q0 7.5 10 7.5" fill="none" stroke="var(--orange)" strokeWidth="3" />
+                <rect x="158" y="156" width="19" height="21" rx="3.5" fill="var(--orange)" />
+                <text x="167.5" y="170" textAnchor="middle" fontSize="7" fill="var(--background)" fontFamily="var(--font-geist-mono), monospace" fontWeight="700">
                   {"{}"}
                 </text>
               </g>
-              <circle cx="152" cy="165" r="6" fill={SKIN} />
+              <circle cx="151" cy="173" r="6" fill={SKIN} />
             </g>
           </g>
         </g>

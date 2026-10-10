@@ -150,7 +150,7 @@
 
 .dev-held-mug {
   /* gira em torno da mão, que segura a alça */
-  transform-origin: 152px 165px;
+  transform-origin: 151px 173px;
   animation: dev-mug-tilt 5s ease-in-out infinite;
 }
 
@@ -303,7 +303,7 @@
   }
   50%,
   62% {
-    transform: rotate(-28deg);
+    transform: rotate(-34deg);
   }
 }
 
