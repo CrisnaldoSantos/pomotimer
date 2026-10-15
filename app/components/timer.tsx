@@ -38,6 +38,22 @@ function playChime() {
   }
 }
 
+/**
+ * Notificação de fim de sessão. Com o app instalado (principalmente no Android) o
+ * construtor `new Notification()` não funciona; é preciso passar pelo service worker.
+ */
+async function notify(title: string) {
+  if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+  const options = { icon: "/icons/icon-192.png", badge: "/icons/icon-192.png" };
+  try {
+    const registration = await navigator.serviceWorker?.getRegistration();
+    if (registration) await registration.showNotification(title, options);
+    else new Notification(title, options);
+  } catch {
+    // Notificações indisponíveis — segue só com o som
+  }
+}
+
 function countFocusToday(cycles: Cycle[]) {
   const today = new Date().toDateString();
   return cycles.filter(
@@ -128,9 +144,7 @@ export function Timer() {
 
   const onComplete = useEffectEvent(() => {
     playChime();
-    if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-      new Notification(mode === "focus" ? "Foco concluído! Hora da pausa ☕" : "Pausa encerrada. Bora codar! 💻");
-    }
+    void notify(mode === "focus" ? "Foco concluído! Hora da pausa ☕" : "Pausa encerrada. Bora codar! 💻");
     goTo(nextMode(true), "completed");
   });
 

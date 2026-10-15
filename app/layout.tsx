@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Nav } from "./components/nav";
+import { PwaRegister } from "./components/pwa-register";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,6 +17,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "pomotimer",
   description: "Pomodoro para devs",
+  appleWebApp: {
+    capable: true,
+    title: "pomotimer",
+    statusBarStyle: "black",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0d1117",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -27,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Nav />
         {children}
+        <PwaRegister />
       </body>
     </html>
   );
