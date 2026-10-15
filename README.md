@@ -15,33 +15,59 @@
 
 ## Visão geral
 
-O Pomotimer é um timer de foco com visual minimalista e tema escuro, pensado para quem quer manter o ritmo de trabalho sem perder o controle do tempo. O fluxo principal alterna entre:
+O pomotimer é um timer Pomodoro para sessões de foco e descanso, com interface inspirada em terminais e ferramentas de desenvolvimento. Ele funciona no navegador e pode ser instalado como Progressive Web App (PWA) em dispositivos compatíveis.
+
+**Versão de produção:** [my-pomo-timer.netlify.app](https://my-pomo-timer.netlify.app/)
+
+O fluxo alterna entre:
 
 - foco intenso
 - pausa curta
 - pausa longa
 
-A interface foi criada com um estilo de terminal/editor, usando tipografia monoespaçada, superfícies escuras e detalhes em verde, azul e laranja para reforçar o estado da sessão.
+O tema escuro usa tipografia monoespaçada e cores diferentes para indicar o estado da sessão.
 
 ## Recursos
 
-- temporizador de foco com contagem regressiva
-- ciclos automáticos de pausa curta e longa
-- histórico local de sessões concluídas e interrompidas
-- configurações persistidas no navegador
-- notificações do sistema para mudança de fase
-- atalhos de teclado para controlar rapidamente o timer
-- layout responsivo para desktop e mobile
+- Timer com controles para iniciar, pausar, continuar, reiniciar e pular uma sessão.
+- Alternância entre foco, pausa curta e pausa longa, com contagem de sessões de foco.
+- Histórico local de sessões concluídas e interrompidas.
+- Duração configurável para cada tipo de sessão; as alterações passam a valer na próxima sessão.
+- Som e notificações do sistema ao fim de uma sessão. As notificações dependem da permissão do navegador.
+- Atalhos de teclado: `Espaço` inicia/pausa, `R` reinicia e `S` pula a sessão (quando o foco não está em um campo ou controle).
+- Interface responsiva para desktop e dispositivos móveis.
+- PWA com modo de exibição independente, ícones próprios e suporte a abertura offline após o cache das páginas e recursos.
 
 ## Stack
 
-- Next.js 16
-- React 19
-- TypeScript
-- Tailwind CSS
-- Local Storage para persistência
+- Next.js 16 com App Router
+- React 19 e TypeScript
+- Tailwind CSS 4
+- Service worker próprio para cache de páginas e arquivos estáticos
+- `localStorage` para configurações e histórico, sem backend ou conta de usuário
+
+## PWA e instalação
+
+O manifesto é definido em `app/manifest.ts`. Ele configura o nome, o tema, a abertura em modo `standalone`, os ícones e atalhos para as páginas **Ciclos** e **Configurações**. Os arquivos de ícone ficam em `public/icons/`:
+
+- `icon-192.png`: ícone de 192 × 192 px.
+- `icon-512.png`: ícone de 512 × 512 px.
+- `icon-maskable-512.png`: ícone de 512 × 512 px com finalidade `maskable`, para máscaras de ícones em dispositivos compatíveis.
+
+Para instalar, publique o app em uma origem HTTPS e use a opção de instalação do navegador. Em dispositivos móveis, essa opção pode aparecer como **Instalar app** ou **Adicionar à tela inicial**. O app também pode ser testado em `localhost`.
+
+O service worker é registrado apenas em produção. Ele usa a rede primeiro para páginas e mantém uma cópia em cache como alternativa offline; arquivos estáticos e ícones são servidos do cache quando disponíveis. As rotas principais (`/`, `/ciclos` e `/configuracoes`) são pré-carregadas quando possível. Para validar esse comportamento localmente, gere e inicie a versão de produção:
+
+```bash
+pnpm build
+pnpm start
+```
+
+O modo offline depende de uma visita ou instalação com rede para preencher o cache. Notificações podem exigir autorização e variam conforme o navegador e o sistema operacional.
 
 ## Como rodar
+
+Requisitos: Node.js compatível com Next.js 16 e pnpm 10 (a versão do gerenciador está indicada no `package.json`).
 
 1. Instale as dependências:
 
@@ -66,7 +92,7 @@ http://localhost:3000
 ```bash
 pnpm dev     # inicia a aplicação em modo de desenvolvimento
 pnpm build   # gera a build de produção
-pnpm start   # inicia a build gerada
+pnpm start   # inicia a build de produção (execute build antes)
 pnpm lint    # valida o código com ESLint
 ```
 
@@ -75,16 +101,19 @@ pnpm lint    # valida o código com ESLint
 ```txt
 pomotimer/
 ├── app/
-│   ├── ciclos/
-│   ├── configuracoes/
-│   ├── components/
-│   ├── hooks/
-│   ├── lib/
-│   ├── services/
+│   ├── ciclos/                 # página do histórico
+│   ├── configuracoes/          # página de configurações
+│   ├── components/             # timer, navegação, histórico e componentes PWA
+│   ├── hooks/                  # hooks para dados locais
+│   ├── lib/                    # regras e formatação do Pomodoro
+│   ├── services/               # persistência de ciclos e configurações
+│   ├── manifest.ts             # manifesto PWA
 │   ├── globals.css
 │   ├── layout.tsx
-│   └── page.tsx
+│   └── page.tsx                # timer principal
 ├── public/
+│   ├── icons/                  # ícones do PWA
+│   └── sw.js                   # service worker
 ├── package.json
 ├── pnpm-lock.yaml
 ├── tsconfig.json
@@ -109,11 +138,11 @@ A tipografia predominante é monoespaçada para transmitir velocidade, clareza e
 
 ## Fluxo de uso
 
-1. Inicie uma sessão de foco.
-2. Trabalhe na tarefa escolhida sem interrupções.
-3. Quando a sessão terminar, o app alterna para pausa curta ou longa.
-4. Acompanhe o histórico em "Ciclos" e ajuste os tempos em "Configurações".
+1. Inicie uma sessão de foco e trabalhe até o timer terminar.
+2. O app registra a sessão e alterna para a pausa correspondente.
+3. Consulte sessões anteriores em **Ciclos**.
+4. Ajuste as durações em **Configurações**; sessões já iniciadas mantêm a duração original.
 
-## Observação
+## Dados e privacidade
 
-Este projeto foi desenvolvido para funcionar de forma leve e local, sem dependência de backend, priorizando performance e simplicidade no fluxo de produtividade.
+O histórico e as configurações são salvos no `localStorage` do navegador em uso. Não há sincronização entre dispositivos nem backend; limpar os dados do site remove as informações salvas naquele navegador.
